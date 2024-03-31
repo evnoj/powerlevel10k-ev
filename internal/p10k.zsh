@@ -2091,7 +2091,12 @@ prompt_dir() {
     if [[ -n $anchor_style ]]; then
       (( expand )) && _p9k_escape_style $anchor_style || _p9k__ret=$anchor_style
       if [[ -z $last_style ]]; then
-        parts=("${(@)parts/%(#b)(*)$'\2'/$_p9k__ret$match[1]$style}")
+        # original code
+        # parts=("${(@)parts/%(#b)(*)$'\2'/$_p9k__ret$match[1]$style}")
+        # Leave the first anchor segment with normal color
+        parts=("${(@)parts/%(#b)(\*)$'\2'/$match[1]$style}")
+        # Apply anchor_style to the remaining anchor segments
+        parts=("${(@)parts/%(#b)(\*)$'\2'/$_p9k__ret$match[1]$style}")
       else
         (( $#parts > 1 )) && parts[1,-2]=("${(@)parts[1,-2]/%(#b)(*)$'\2'/$_p9k__ret$match[1]$style}")
         parts[-1]=${parts[-1]/$'\2'}
