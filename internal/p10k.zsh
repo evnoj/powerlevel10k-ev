@@ -2059,15 +2059,21 @@ prompt_dir() {
       parts[1]=()
     fi
 
+    # set color of last dir segment with 'typeset -g POWERLEVEL9K_DIR_LAST_SEGMENT_FOREGROUND=color' in $ZDOTDIR/.p10k.zsh
     local last_style=
+    _p9k_color $state LAST_SEGMENT_FOREGROUND '' # Get the color code
+    _p9k_foreground $_p9k__ret
+    last_style+=$_p9k__ret # Add the color code to last_style
+
+    # Add bold style if desired
     _p9k_param $state PATH_HIGHLIGHT_BOLD ''
     [[ $_p9k__ret == true ]] && last_style+=%B
-    if (( $+parameters[_POWERLEVEL9K_DIR_PATH_HIGHLIGHT_FOREGROUND] ||
-          $+parameters[_POWERLEVEL9K_${state_u}_PATH_HIGHLIGHT_FOREGROUND] )); then
-      _p9k_color $state PATH_HIGHLIGHT_FOREGROUND ''
-      _p9k_foreground $_p9k__ret
-      last_style+=$_p9k__ret
-    fi
+    # if (( $+parameters[_POWERLEVEL9K_DIR_PATH_HIGHLIGHT_FOREGROUND] ||
+    #       $+parameters[_POWERLEVEL9K_${state_u}_PATH_HIGHLIGHT_FOREGROUND] )); then
+    #   _p9k_color $state PATH_HIGHLIGHT_FOREGROUND ''
+    #   _p9k_foreground $_p9k__ret
+    #   last_style+=$_p9k__ret
+    # fi
     if [[ -n $last_style ]]; then
       (( expand )) && _p9k_escape_style $last_style || _p9k__ret=$last_style
       parts[-1]=$_p9k__ret${parts[-1]//$'\1'/$'\1'$_p9k__ret}$style
