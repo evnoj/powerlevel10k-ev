@@ -2098,7 +2098,7 @@ prompt_dir() {
         # Apply anchor_style to the remaining anchor segments
         parts=("${(@)parts/%(#b)(\*)$'\2'/$_p9k__ret$match[1]$style}")
       else
-        (( $#parts > 1 )) && parts[1,-2]=("${(@)parts[1,-2]/%(#b)(*)$'\2'/$_p9k__ret$match[1]$style}")
+        (( $#parts > 1 )) && parts[2,-2]=("${(@)parts[2,-2]/%(#b)(*)$'\2'/$_p9k__ret$match[1]$style}")
         parts[-1]=${parts[-1]/$'\2'}
       fi
     else
