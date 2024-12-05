@@ -1,11 +1,9 @@
 # Evan's changes
-stable (for my use case) changes are on branch main-ev
+stable (for my use case) changes are on branch "main"
 
 changes from upstream:
 - the first segment of the dir path will ignore the 'anchor' styling
 - the last segment of the dir path (a.k.a. the directory you're in) can have a custom color by setting 'typeset -g POWERLEVEL9K_DIR_LAST_SEGMENT_FOREGROUND=color' in the p10k config
-
-these changes were quick and dirty and may not work in all cases
 
 # Powerlevel10k
 [![Gitter](https://badges.gitter.im/powerlevel10k/community.svg)](
