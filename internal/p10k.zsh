@@ -3608,6 +3608,7 @@ typeset -gA __p9k_vcs_states=(
   'UNTRACKED'     '2'
   'LOADING'       '8'
   'CONFLICTED'    '3'
+  'DISABLED'      '4'
 )
 
 function +vi-git-untracked() {
@@ -3888,6 +3889,12 @@ function _p9k_vcs_render() {
       _p9k_prompt_segment prompt_vcs_LOADING "${__p9k_vcs_states[LOADING]}" "$_p9k_color1" VCS_LOADING_ICON 0 '' "$_POWERLEVEL9K_VCS_LOADING_TEXT"
       return 0
     fi
+  elif [[ $VCS_STATUS_RESULT == disabled-* ]]; then
+    local disabled_msg="${POWERLEVEL9K_VCS_DISABLED_TEXT:-Git Disabled}"
+
+    _p9k_prompt_segment prompt_vcs_DISABLED "${__p9k_vcs_states[DISABLED]}" "$_p9k_color1" '' 0 '' "$disabled_msg"
+
+    return 0
   elif [[ $VCS_STATUS_RESULT != ok-* ]]; then
     return 1
   fi
@@ -4054,7 +4061,7 @@ function _p9k_vcs_render() {
 
 function _p9k_maybe_ignore_git_repo() {
   if [[ $VCS_STATUS_RESULT == ok-* && $VCS_STATUS_WORKDIR == $~_POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN ]]; then
-    VCS_STATUS_RESULT=norepo${VCS_STATUS_RESULT#ok}
+    VCS_STATUS_RESULT=disabled${VCS_STATUS_RESULT#ok}
   fi
 }
 
